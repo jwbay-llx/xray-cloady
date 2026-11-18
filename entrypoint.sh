@@ -1,6 +1,6 @@
 #!/bin/sh
 # Generate Xray config from environment variables and start xray.
-#   UUID (required) - VLESS client id, set as a secret in Cloady
+#   UUID (required) - VMess client id, set as a secret in Cloady
 #   PORT (default 3000) - port Cloady routes the app's HTTPS endpoint to
 #   WS_PATH (default /ray) - WebSocket path
 set -eu
@@ -20,10 +20,9 @@ cat > /etc/xray/config.json <<EOF
   "inbounds": [
     {
       "port": ${PORT},
-      "protocol": "vless",
+      "protocol": "vmess",
       "settings": {
-        "clients": [ { "id": "${UUID}" } ],
-        "decryption": "none"
+        "clients": [ { "id": "${UUID}", "alterId": 0 } ]
       },
       "streamSettings": {
         "network": "ws",
